@@ -6,13 +6,11 @@ import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from '
 
 export default function HomeScreen() {
     const [fileObject, setFileObject] = useState<FileSystem.File | null>(null);
-    const [fileInfo, setFileInfo] = useState<string>('');
     const [errorText, setErrorText] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const loadFileFromAsset = async () => {
         setErrorText('');
-        setFileInfo('');
         setFileObject(null);
 
         try {
@@ -81,9 +79,7 @@ export default function HomeScreen() {
             setErrorText('');
             console.log('🚀 Attempting to open file with IntentLauncher...');
 
-            const fileWithUri = fileObject as any;
-
-            if (!fileWithUri.contentUri) {
+            if (!fileObject.contentUri) {
                 const error = 'contentUri is missing from the File object. This is the bug we are testing!';
                 setErrorText(error);
                 Alert.alert(
@@ -94,10 +90,10 @@ export default function HomeScreen() {
                 return;
             }
 
-            console.log('📄 Using contentUri:', fileWithUri.contentUri);
+            console.log('📄 Using contentUri:', fileObject.contentUri);
 
             await IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
-                data: fileWithUri.contentUri,
+                data: fileObject.contentUri,
                 flags: 1,
                 type: 'application/pdf'
             });
