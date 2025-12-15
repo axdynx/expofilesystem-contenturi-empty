@@ -29,6 +29,12 @@
     "plugins": [
       "expo-router",
       "expo-asset"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "2fe9c177-3e41-4329-baae-0e5cfabeb055"
+      }
+    }
   }
 }
